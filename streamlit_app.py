@@ -24,3 +24,30 @@ elif shape == 'rectangle':
     if rect_btn:
         area = w * h
         st.write(f'The area of the rectangle is {area}')
+
+
+#app2
+import streamlit as st
+
+# العنوان
+st.header('رفع ملف')
+
+# رفع الملف
+uploaded_file = st.file_uploader("اختر ملف", type=["csv", "txt", "pdf", "jpg", "png"])
+
+# التحقق إذا كان هناك ملف مرفوع
+if uploaded_file is not None:
+    # عرض بعض المعلومات عن الملف
+    st.write(f"اسم الملف: {uploaded_file.name}")
+    st.write(f"نوع الملف: {uploaded_file.type}")
+    st.write(f"حجم الملف: {uploaded_file.size} bytes")
+    
+    # إذا كان الملف نصي (csv أو txt)، عرض محتوياته
+    if uploaded_file.type == "text/csv" or uploaded_file.type == "text/plain":
+        file_content = uploaded_file.read().decode("utf-8")
+        st.text(file_content)
+
+    # إذا كان الملف صورة، عرضها
+    elif uploaded_file.type in ["image/jpeg", "image/png"]:
+        st.image(uploaded_file, caption="الصورة التي تم رفعها", use_column_width=True)
+
