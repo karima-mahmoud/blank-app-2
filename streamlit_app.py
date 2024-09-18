@@ -28,26 +28,19 @@ elif shape == 'rectangle':
 
 #app2
 import streamlit as st
+import pandas as pd
 
-# العنوان
-st.header('رفع ملف')
+st.header('File Upload App')
+file = st.file_uploader('Upload file', type=['csv'])
 
-# رفع الملف
-uploaded_file = st.file_uploader("اختر ملف", type=["csv", "txt", "pdf", "jpg", "png"])
-
-# التحقق إذا كان هناك ملف مرفوع
-if uploaded_file is not None:
-    # عرض بعض المعلومات عن الملف
-    st.write(f"اسم الملف: {uploaded_file.name}")
-    st.write(f"نوع الملف: {uploaded_file.type}")
-    st.write(f"حجم الملف: {uploaded_file.size} bytes")
+if file is not None:
+    df = pd.read_csv(file)
+    st.write(df)
     
-    # إذا كان الملف نصي (csv أو txt)، عرض محتوياته
-    if uploaded_file.type == "text/csv" or uploaded_file.type == "text/plain":
-        file_content = uploaded_file.read().decode("utf-8")
-        st.text(file_content)
+    num_row = st.slider('Choose num rows', min_value=1, max_value=len(df))
+    names_columns = st.multiselect('Choose names of columns', df.columns.tolist())
 
-    # إذا كان الملف صورة، عرضها
-    elif uploaded_file.type in ["image/jpeg", "image/png"]:
-        st.image(uploaded_file, caption="الصورة التي تم رفعها", use_column_width=True)
-
+    if names_columns:
+        st.write(df[:num_row][names_columns])
+    else:
+        st.write(df[:num_row])
