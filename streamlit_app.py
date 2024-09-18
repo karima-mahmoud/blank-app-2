@@ -1,27 +1,26 @@
 import streamlit as st
 
-import streamlit as st
-name=st.text_input('Enter your name')
-btn=st.button('show')
-if btn:
-  st.write(f'Hello {name}')
+# Input for name
+name = st.text_input('Enter your name')
+show_btn = st.button('Show')
+if show_btn:
+    st.write(f'Hello {name}')
 
+# App1: Area calculation
+st.header("Calculate Area")
+shape = st.selectbox('Choose the shape', ['circle', 'rectangle'])
 
-# app1
-area =None
-st.header("calculate area")
-choose=st.selectbox('choose the shape',['circle'],['rectangle'])
-if choose=='circle':
-    r=st.number_input('enter the radius',min_value=1.0,max_value=100.0)
-    area=3.14*r*r
-    btn=st.button('calculate')
+if shape == 'circle':
+    r = st.number_input('Enter the radius', min_value=1.0, max_value=100.0)
+    circle_btn = st.button('Calculate Circle Area')
+    if circle_btn:
+        area = 3.14 * r * r
+        st.write(f'The area of the circle is {area}')
 
-elif choose=='rectangle':
-    w=st.number_input('enter the width',min_value=1.0,max_value=100.0)
-    h=st.number_input('enter the hight',min_value=1.0,max_value=100.0)
-    area=h*w
-    btn=st.button('calculate')
-if btn:
-   st.write(f'area  is {area}')
-    
-      
+elif shape == 'rectangle':
+    w = st.number_input('Enter the width', min_value=1.0, max_value=100.0)
+    h = st.number_input('Enter the height', min_value=1.0, max_value=100.0)
+    rect_btn = st.button('Calculate Rectangle Area')
+    if rect_btn:
+        area = w * h
+        st.write(f'The area of the rectangle is {area}')
